@@ -1,0 +1,67 @@
+<template>
+    <lightning-card title="OKR Dashboard" icon-name="standard:goal">
+        <div class="slds-m-around_medium">
+            <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                <div class="slds-col">
+                    <lightning-combobox
+                        label="Year"
+                        value={selectedYear}
+                        options={yearOptions}
+                        onchange={handleYearChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col">
+                    <lightning-combobox
+                        label="User"
+                        value={selectedUser}
+                        options={userOptions}
+                        onchange={handleUserChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-align-bottom">
+                    <lightning-button-menu alternative-text="New Actions" label="New Actions" onselect={handleMenuSelect} class="slds-float_right">
+                        <lightning-menu-item label="New Key Result" value="new_key_result"></lightning-menu-item>
+                        <lightning-menu-item label="New Review" value="new_review"></lightning-menu-item>
+                        <lightning-menu-item label="New Survey" value="new_survey"></lightning-menu-item>
+                        <lightning-menu-item label="New Case Study" value="new_case_study"></lightning-menu-item>
+                        <lightning-menu-item label="New Google Review" value="new_google_review"></lightning-menu-item>
+                    </lightning-button-menu>
+                </div>
+            </div>
+
+            <template for:each={categories} for:item="category">
+                <div key={category.categoryId} class="slds-box slds-theme_default slds-m-bottom_large slds-grid slds-wrap slds-gutters slds-p-around_medium">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+                        <h2 class="slds-text-heading_medium"><b>{category.categoryName}</b></h2>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12">
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <template for:each={category.cards} for:item="card">
+                                <div key={card.Id} class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                    <div class="slds-box slds-theme_default slds-p-around_medium">
+                                        <div class="slds-grid slds-gutters slds-m-bottom_small slds-border_bottom slds-p-bottom_x-small">
+                                            <div class="slds-col slds-size_8-of-12">
+                                                <h3 class="slds-text-heading_small"><b>{card.Name}</b></h3>
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12 slds-text-align_right slds-text-color_weak">
+                                                {card.status}
+                                            </div>
+                                        </div>
+                                        <div class="slds-card__body">
+                                            <template for:each={card.metrics} for:item="metric">
+                                                <div key={metric.label} class="slds-grid slds-gutters slds-border_bottom slds-p-vertical_xx-small">
+                                                    <div class="slds-col slds-size_8-of-12">{metric.label}</div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-text-align_right">{metric.completed} / {metric.target}</div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
